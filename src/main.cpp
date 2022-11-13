@@ -5,7 +5,7 @@
 #include "roulette.hpp"
 #include "player.hpp"
 
-#define SPIN_NUMBER 5
+#define SPIN_NUMBER 10
 
 void help();
 
@@ -43,7 +43,7 @@ int main(int argc, char* argv[]){
     };
 
     // Make the first bet.
-    for(auto const &p: players){
+    for(auto& p: players){
         p.betRoulette(roulette);
     }
     
@@ -63,6 +63,18 @@ int main(int argc, char* argv[]){
             p.updateBets(roulette);
         }
     }
+
+    std::cout<<"\n================================"<<std::endl;
+    std::cout<<"Simulation end!"<<std::endl;
+    std::cout<<"* Final balance for each player: "<<std::endl;
+    int totalBalance = 0;
+    for(auto const &p: players){
+        int playerBalance = p.getBalance();
+        totalBalance+=playerBalance;
+        std::cout<<"\t- Player "<<p.getName()<<": "<<playerBalance<<std::endl;
+    }
+
+    std::cout<<"* Ending total balance (all the players together): "<<totalBalance<<std::endl;
 
     return 0;
 }

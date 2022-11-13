@@ -23,21 +23,29 @@ std::string Player::getName() const{
     return name;
 }
 
+int Player::getBalance() const{
+    return balance;
+}
+
 void Player::resetBetList(){
     betList = {1,2,3,4};
 }
 
-void Player::betRoulette(const Roulette& roulette) const{
+void Player::betRoulette(const Roulette& roulette){
+    balance -= currentBet;
     roulette.setBet(playerID,defaultBetType,currentBet);
 }
 
 void Player::updateBets(const Roulette& roulette){
     // Take profit
-    float moneyWon;
-    bool hasWon = roulette.payPlayer(playerID,moneyWon);
+    int moneyWon = roulette.payPlayer(playerID);
+    bool hasWon = moneyWon>0;
+
+    // Update balance
+    balance += moneyWon;
 
     // Show player info
-    printPlayerInfo(hasWon,currentBet);
+    printPlayerInfo(hasWon,currentBet,balance);
 
     // Update betList and currentBet
     updateBetList(hasWon);
@@ -89,15 +97,16 @@ void Player::updateCurrentBet(){
     
 }
 
-void Player::printPlayerInfo(bool won, float moneyBet) const{
+void Player::printPlayerInfo(bool won, int moneyBet, int bal) const{
     std::cout<< "\t- PlayerName: "<<name<<
                 ", betType: "<<Roulette::getBetTypeName(defaultBetType)<<
-                ", betList = {";
+                ", betList: {";
                 for(auto n: betList){
                     std::cout<<n<<",";
                 }
                 std::cout<<"}"<<
-                ", moneyBet = "<<moneyBet<<
-                ", result = "<<(won?"Won":"Lost")<<
+                ", moneyBet: "<<moneyBet<<
+                " | result: "<<(won?"Won":"Lost")<<
+                " => balance = "<<bal<<
                 std::endl;
 }

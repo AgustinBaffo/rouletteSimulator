@@ -89,27 +89,25 @@ void Roulette::printSpinResult(){
     std::cout<<std::endl;
 }
 
-void Roulette::setBet(int playID, BetsTypes betType, float money) const{
+void Roulette::setBet(int playID, BetsTypes betType, int money) const{
     if(money<=0){
         return;
     }
     currentBetTable[playID] = bet{betType,money};
 }
 
-bool Roulette::payPlayer(int playerID, float &money) const{
-    bool hasWon = false;
-    money = 0;
+int Roulette::payPlayer(int playerID) const{
+    int moneyWon = 0;
     
     if (!(lastBetTable.find(playerID) == lastBetTable.end())) {
         if(betResult.at(lastBetTable.at(playerID).betType)){
-            hasWon = true;
-            money = betResult.at(lastBetTable.at(playerID).betType);
+            moneyWon = 2 * lastBetTable.at(playerID).money;
         }
     } else {
         std::cout<<"[Warning] Player "<< playerID <<" asked about a missing bet"<<std::endl;
     }
 
-    return hasWon;
+    return moneyWon;
 }
 
 std::string Roulette::getBetTypeName(BetsTypes bet){

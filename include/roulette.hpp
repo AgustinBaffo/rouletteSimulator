@@ -23,7 +23,7 @@ public:
 
     struct bet{
         BetsTypes betType;
-        float money;
+        int money;
     };
 
     typedef std::map<int,bet> BetTable;
@@ -36,8 +36,8 @@ public:
     ~Roulette();
 
     void spin();
-    void setBet(int playID, BetsTypes betType, float money) const;
-    bool payPlayer(int playerID, float &money) const;
+    void setBet(int playID, BetsTypes betType, int money) const;
+    int payPlayer(int playerID) const;
 
 private:
 
