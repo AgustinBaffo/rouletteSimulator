@@ -16,16 +16,20 @@ Roulette::~Roulette()
 }
 
 void Roulette::spin(){
-       
+    
+    // Get random number (spinning roulette)
     int spinResult = std::rand() % ROULETTE_MAX_NUMBER;
     setBetResult(spinResult);
 
-    // TEST: show result
-    std::cout<<std::endl<<spinResult<<") ";
+    // Print result
+    std::cout<<"* Roulette result: "<<spinResult;
     for(auto a: betResult){
-        std::cout<<getBetTypeName(a.first)<<": "<<a.second<<", ";
+        if(a.second){
+            std::cout<<", "<<getBetTypeName(a.first);
+        }
     }
     std::cout<<std::endl;
+
 
 }
 
@@ -91,10 +95,13 @@ float Roulette::payPlayer(int playerID){
     float ret = 0;
     
     if (!(betTable.find(playerID) == betTable.end())) {
-        std::cout<<"bet="<<getBetTypeName(betTable.at(playerID).betType);
-        std::cout<<", restult = "<< betResult[betTable.at(playerID).betType] <<std::endl;   
+        if(betResult[betTable.at(playerID).betType]){
+            std::cout<<"\t - Player "<<playerID<<" won!"<<std::endl;
+        }else{
+            std::cout<<"\t - Player "<<playerID<<" lost!"<<std::endl;
+        }
     } else {
-        std::cout<<"[Warning] Player "<< playerID <<" asked about a bet not found"<<std::endl;
+        std::cout<<"[Warning] Player "<< playerID <<" asked about a missing bet"<<std::endl;
     }
 
     return ret;

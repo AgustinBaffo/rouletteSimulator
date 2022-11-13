@@ -3,16 +3,18 @@
 
 #include <iostream>
 #include <list>
-#include <roulette.hpp>
+#include "roulette.hpp"
 
 class Player
 {
 public:
-    Player(Roulette::BetsTypes);
+    Player(std::string name, Roulette::BetsTypes);
     ~Player();
 
     void betRoulette(const Roulette& roulette);
     void updateBets(const Roulette& roulette);
+    std::string getName() const;
+    int getID() const;
     
 private:
 

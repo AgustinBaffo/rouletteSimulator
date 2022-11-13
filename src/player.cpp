@@ -6,7 +6,8 @@
     
 int Player::playerCount = 0;
 
-Player::Player(Roulette::BetsTypes defaultBetType):
+Player::Player(std::string name, Roulette::BetsTypes defaultBetType):
+    name(name),
     defaultBetType(defaultBetType)
 {
 
@@ -92,6 +93,17 @@ void Player::betRoulette(const Roulette& roulette){
 }
 
 void Player::updateBets(const Roulette& roulette){
-    
-    
+    // agarrar ganancias
+
+
+    // Make a new bet
+    betRoulette(roulette);
+}
+
+std::string Player::getName() const{
+    return name;
+}
+
+int Player::getID() const {
+    return playerID;
 }
