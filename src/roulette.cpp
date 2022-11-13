@@ -8,6 +8,7 @@ Roulette::Roulette()
 {
     srand((unsigned int)time(NULL));
     resetBetResult();
+    lastSpinResult = 0;
 }
 
 Roulette::~Roulette()
@@ -20,24 +21,17 @@ void Roulette::spin(){
     // Get random number (spinning roulette)
     int spinResult = std::rand() % ROULETTE_MAX_NUMBER;
     setBetResult(spinResult);
+    updateBetTables();
 
-    // Print result
-    std::cout<<"* Roulette result: "<<spinResult;
-    for(auto a: betResult){
-        if(a.second){
-            std::cout<<", "<<getBetTypeName(a.first);
-        }
-    }
-    std::cout<<std::endl;
-
+    printSpinResult();
 
 }
-
-void getName();
 
 void Roulette::setBetResult(int spinResult){
 
     resetBetResult();
+
+    lastSpinResult = spinResult;
 
     if(spinResult==0){
         return;
@@ -84,28 +78,50 @@ void Roulette::setBet(int playID, BetsTypes betType, float money) const{
     if(money<=0){
         return;
     }
-    betTable[playID] = bet{betType,money};
+    currentBetTable[playID] = bet{betType,money};
 }
 
-Roulette::BetTable Roulette::getBetTable() const{
-    return betTable;
+Roulette::BetTable Roulette::getLastBetTable() const{
+    return lastBetTable;
 }
 
-float Roulette::payPlayer(int playerID){
-    float ret = 0;
+void Roulette::updateBetTables(){
+    lastBetTable.clear();
+    lastBetTable = currentBetTable;
+    currentBetTable.clear();
+}
+
+bool Roulette::payPlayer(int playerID, float &money) const{
+    bool hasWon = false;
+    money = 0;
     
-    if (!(betTable.find(playerID) == betTable.end())) {
-        if(betResult[betTable.at(playerID).betType]){
-            std::cout<<"\t - Player "<<playerID<<" won!"<<std::endl;
-        }else{
-            std::cout<<"\t - Player "<<playerID<<" lost!"<<std::endl;
+    if (!(lastBetTable.find(playerID) == lastBetTable.end())) {
+        if(betResult.at(lastBetTable.at(playerID).betType)){
+            hasWon = true;
+            money = betResult.at(lastBetTable.at(playerID).betType);
         }
+        std::cout<<"\t - Player "<<playerID<<" won: "<<money<<std::endl;
     } else {
         std::cout<<"[Warning] Player "<< playerID <<" asked about a missing bet"<<std::endl;
     }
 
-    return ret;
+    return hasWon;
 
+}
+
+void Roulette::printSpinResult(){
+    // Print result
+    std::cout<<"* Players bets: "<<std::endl;
+    for(auto a: lastBetTable){
+        std::cout<<"\t - PlayerID: "<<a.first<<", betType: "<<getBetTypeName(a.second.betType)<<", Money = "<<a.second.money<< std::endl;
+    }
+    std::cout<<"* Roulette result: "<<lastSpinResult;
+    for(auto a: betResult){
+        if(a.second){
+            std::cout<<", "<<getBetTypeName(a.first);
+        }
+    }
+    std::cout<<std::endl;
 }
 
 std::string Roulette::getBetTypeName(BetsTypes bet){

@@ -13,22 +13,9 @@ Player::Player(std::string name, Roulette::BetsTypes defaultBetType):
 
     playerID = playerCount++;
 
-    //****** TEST *****************
     resetBet();
     updateCurrentBet();
 
-    // // TEST
-    // // TODO: Delete it
-    // std::list<bool> intentos = {false,false,false,true,true,true,false,false,true,true};
-    // for(auto w: intentos){
-    //     std::cout<<"betList = ";
-    //     for(auto b: betList){std::cout<<b<<" ";}
-    //     std::cout<<" | bet="<<currentBet;
-    //     std::cout<<" | win="<<w;
-    //     std::cout<<std::endl;
-
-    //     updateBet(w);
-    // }
     
 
 }
@@ -93,12 +80,15 @@ void Player::betRoulette(const Roulette& roulette){
 }
 
 void Player::updateBets(const Roulette& roulette){
-    // agarrar ganancias
-
+    // Take profit
+    float money;
+    bool hasWon = roulette.payPlayer(playerID,money);
 
     // Make a new bet
+    updateBet(hasWon);
     betRoulette(roulette);
 }
+
 
 std::string Player::getName() const{
     return name;

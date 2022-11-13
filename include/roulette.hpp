@@ -30,11 +30,13 @@ public:
 
     void spin();
     
-    BetTable getBetTable() const;
     void setBet(int playID, BetsTypes betType, float money) const;
 
-    float payPlayer(int playerID);
-    std::string getBetTypeName(BetsTypes);
+    bool payPlayer(int playerID, float &money) const;
+    static std::string getBetTypeName(BetsTypes);
+
+
+    BetTable getLastBetTable() const;
 
 private:
 
@@ -42,7 +44,13 @@ private:
     void setBetResult(int number);
     void resetBetResult();
     
-    mutable BetTable betTable;
+    mutable BetTable currentBetTable;
+    BetTable lastBetTable;
+    void updateBetTables();
+
+    int lastSpinResult;
+    void printSpinResult();
+
 };
 
 #endif
