@@ -1,8 +1,6 @@
 #include "roulette.hpp"
 #include "player.hpp"
 
-#define ROULETTE_MAX_NUMBER 37
-#define ROULETTE_MINMAX_LIMIT 19
 
 Roulette::Roulette()
 {
@@ -18,13 +16,15 @@ Roulette::~Roulette()
 
 void Roulette::spin(){
     
-    // Get random number (spinning roulette)
+    // Get random number (spinning roulette).
     int spinResult = std::rand() % ROULETTE_MAX_NUMBER;
     setBetResult(spinResult);
+
+    // Update bet result.
     updateBetTables();
 
+    // Print results.
     printSpinResult();
-
 }
 
 void Roulette::setBetResult(int spinResult){
@@ -73,22 +73,27 @@ void Roulette::resetBetResult(){
                 {HIGH, false}};
 }
 
+void Roulette::updateBetTables(){
+    lastBetTable.clear();
+    lastBetTable = currentBetTable;
+    currentBetTable.clear();
+}
+
+void Roulette::printSpinResult(){
+    std::cout<<"* Roulette result: "<<lastSpinResult;
+    for(auto a: betResult){
+        if(a.second){
+            std::cout<<", "<<getBetTypeName(a.first);
+        }
+    }
+    std::cout<<std::endl;
+}
 
 void Roulette::setBet(int playID, BetsTypes betType, float money) const{
     if(money<=0){
         return;
     }
     currentBetTable[playID] = bet{betType,money};
-}
-
-Roulette::BetTable Roulette::getLastBetTable() const{
-    return lastBetTable;
-}
-
-void Roulette::updateBetTables(){
-    lastBetTable.clear();
-    lastBetTable = currentBetTable;
-    currentBetTable.clear();
 }
 
 bool Roulette::payPlayer(int playerID, float &money) const{
@@ -100,28 +105,11 @@ bool Roulette::payPlayer(int playerID, float &money) const{
             hasWon = true;
             money = betResult.at(lastBetTable.at(playerID).betType);
         }
-        std::cout<<"\t - Player "<<playerID<<" won: "<<money<<std::endl;
     } else {
         std::cout<<"[Warning] Player "<< playerID <<" asked about a missing bet"<<std::endl;
     }
 
     return hasWon;
-
-}
-
-void Roulette::printSpinResult(){
-    // Print result
-    std::cout<<"* Players bets: "<<std::endl;
-    for(auto a: lastBetTable){
-        std::cout<<"\t - PlayerID: "<<a.first<<", betType: "<<getBetTypeName(a.second.betType)<<", Money = "<<a.second.money<< std::endl;
-    }
-    std::cout<<"* Roulette result: "<<lastSpinResult;
-    for(auto a: betResult){
-        if(a.second){
-            std::cout<<", "<<getBetTypeName(a.first);
-        }
-    }
-    std::cout<<std::endl;
 }
 
 std::string Roulette::getBetTypeName(BetsTypes bet){

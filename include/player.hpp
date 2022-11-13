@@ -11,26 +11,26 @@ public:
     Player(std::string name, Roulette::BetsTypes);
     ~Player();
 
-    void betRoulette(const Roulette& roulette);
-    void updateBets(const Roulette& roulette);
     std::string getName() const;
-    int getID() const;
+
+    void betRoulette(const Roulette& roulette) const;
+    void updateBets(const Roulette& roulette);
     
 private:
 
     static int playerCount;
     int playerID;
-    std::string name;   //TODO: initialize
-    float balance;      //TODO: initialize
+    std::string name;
+    float balance;
+    Roulette::BetsTypes defaultBetType;
     
     std::list<int> betList;
     int currentBet;
 
-    void updateBet(bool hasWon);
+    void resetBetList();
+    void updateBetList(bool hasWon);
     void updateCurrentBet();
-    void resetBet();
-    Roulette::BetsTypes defaultBetType;
-    
+    void printPlayerInfo(bool hasWon, float moneyBet) const;
 
 };
 

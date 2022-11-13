@@ -11,6 +11,7 @@ void help();
 
 int main(int argc, char* argv[]){
 
+    // Parse args.
     bool verbose = false;
     for (int i = 1; i < argc; ++i){
         if(!strcmp(argv[i], "-h")){
@@ -27,7 +28,11 @@ int main(int argc, char* argv[]){
     std::cout<<"* STARTING ROULETTE SIMULATOR *"<<std::endl;
     std::cout<<"*******************************"<<std::endl;
 
-    // Initialize players vector
+
+    // Instance roulette.
+    Roulette roulette;
+    
+    // Initialize players vector.
     std::vector<Player> players = {
         Player("A", Roulette::RED),
         Player("B", Roulette::BLACK),
@@ -37,25 +42,24 @@ int main(int argc, char* argv[]){
         Player("F", Roulette::ODD),
     };
 
-    // Instance roulette
-    Roulette roulette;
-
-    // Make the first bet
-    for(auto p: players){
+    // Make the first bet.
+    for(auto const &p: players){
         p.betRoulette(roulette);
     }
-
-    for (int spinCounter = 0; spinCounter<SPIN_NUMBER; spinCounter++){
+    
+    // Main loop: the roulette is spun and then the players update their bets.
+    // They teke their profits based on the result of the roulette and make a new bet.
+    for (int spinCounter = 1; spinCounter<=SPIN_NUMBER; spinCounter++){
         
         std::cout<<"------------------------------"<<std::endl;
         std::cout<<"* Spin number: "<<spinCounter<<std::endl;
 
-        // Spin roulette
+        // Spin roulette.
         roulette.spin();
 
+        // Take profit and make and bet again.
         std::cout<<"* Players results: "<<std::endl;
-        // Take profit and make and bet again
-        for(auto p: players){
+        for(auto& p: players){
             p.updateBets(roulette);
         }
     }
