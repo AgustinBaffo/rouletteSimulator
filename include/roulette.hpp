@@ -28,7 +28,7 @@ public:
 
     typedef std::map<int,bet> BetTable;
 
-    static const int MIN_BET = 4;
+    static const int MIN_BET = 5;
     static const int MAX_BET = 4000;
     static std::string getBetTypeName(BetsTypes);
 
