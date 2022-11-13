@@ -16,16 +16,16 @@ Roulette::~Roulette()
 }
 
 void Roulette::spin(){
-
+       
     int spinResult = std::rand() % ROULETTE_MAX_NUMBER;
     setBetResult(spinResult);
 
     // TEST: show result
-    // std::cout<<std::endl<<spinResult<<") ";
-    // for(auto a: betResult){
-    //     std::cout<<getBetTypeName(a.first)<<": "<<a.second<<", ";
-    // }
-    // std::cout<<std::endl;
+    std::cout<<std::endl<<spinResult<<") ";
+    for(auto a: betResult){
+        std::cout<<getBetTypeName(a.first)<<": "<<a.second<<", ";
+    }
+    std::cout<<std::endl;
 
 }
 
@@ -73,6 +73,32 @@ void Roulette::resetBetResult(){
                 {ODD, false}, 
                 {LOW, false}, 
                 {HIGH, false}};
+}
+
+
+void Roulette::setBet(int playID, BetsTypes betType, float money) const{
+    if(money<=0){
+        return;
+    }
+    betTable[playID] = bet{betType,money};
+}
+
+Roulette::BetTable Roulette::getBetTable() const{
+    return betTable;
+}
+
+float Roulette::payPlayer(int playerID){
+    float ret = 0;
+    
+    if (!(betTable.find(playerID) == betTable.end())) {
+        std::cout<<"bet="<<getBetTypeName(betTable.at(playerID).betType);
+        std::cout<<", restult = "<< betResult[betTable.at(playerID).betType] <<std::endl;   
+    } else {
+        std::cout<<"[Warning] Player "<< playerID <<" asked about a bet not found"<<std::endl;
+    }
+
+    return ret;
+
 }
 
 std::string Roulette::getBetTypeName(BetsTypes bet){

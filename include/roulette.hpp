@@ -18,20 +18,31 @@ public:
         HIGH
     };
 
+    struct bet{
+        BetsTypes betType;
+        float money;
+    };
+
+    typedef std::map<int,bet> BetTable;
+
     Roulette();
     ~Roulette();
 
     void spin();
     
+    BetTable getBetTable() const;
+    void setBet(int playID, BetsTypes betType, float money) const;
+
+    float payPlayer(int playerID);
+    std::string getBetTypeName(BetsTypes);
+
 private:
 
     std::map<BetsTypes,bool> betResult;
     void setBetResult(int number);
     void resetBetResult();
     
-    std::string getBetTypeName(BetsTypes);
-
-
+    mutable BetTable betTable;
 };
 
 #endif

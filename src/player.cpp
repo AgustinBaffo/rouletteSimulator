@@ -4,24 +4,30 @@
 #define MIN_BET 4       // TODO: move to another class
 #define MAX_BET 4000    // TODO: move to another class
     
+int Player::playerCount = 0;
 
-Player::Player(){
+Player::Player(Roulette::BetsTypes defaultBetType):
+    defaultBetType(defaultBetType)
+{
 
+    playerID = playerCount++;
+
+    //****** TEST *****************
     resetBet();
     updateCurrentBet();
 
-    // TEST
-    // TODO: Delete it
-    std::list<bool> intentos = {false,false,false,true,true,true,false,false,true,true};
-    for(auto w: intentos){
-        std::cout<<"betList = ";
-        for(auto b: betList){std::cout<<b<<" ";}
-        std::cout<<" | bet="<<currentBet;
-        std::cout<<" | win="<<w;
-        std::cout<<std::endl;
+    // // TEST
+    // // TODO: Delete it
+    // std::list<bool> intentos = {false,false,false,true,true,true,false,false,true,true};
+    // for(auto w: intentos){
+    //     std::cout<<"betList = ";
+    //     for(auto b: betList){std::cout<<b<<" ";}
+    //     std::cout<<" | bet="<<currentBet;
+    //     std::cout<<" | win="<<w;
+    //     std::cout<<std::endl;
 
-        updateBet(w);
-    }
+    //     updateBet(w);
+    // }
     
 
 }
@@ -78,5 +84,14 @@ void Player::updateCurrentBet(){
         resetBet();
         updateCurrentBet();
     }
+    
+}
+
+void Player::betRoulette(const Roulette& roulette){
+    roulette.setBet(playerID,defaultBetType,currentBet);
+}
+
+void Player::updateBets(const Roulette& roulette){
+    
     
 }

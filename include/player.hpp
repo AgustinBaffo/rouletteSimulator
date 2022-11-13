@@ -3,15 +3,21 @@
 
 #include <iostream>
 #include <list>
+#include <roulette.hpp>
 
 class Player
 {
 public:
-    Player();
+    Player(Roulette::BetsTypes);
     ~Player();
 
+    void betRoulette(const Roulette& roulette);
+    void updateBets(const Roulette& roulette);
+    
 private:
 
+    static int playerCount;
+    int playerID;
     std::string name;   //TODO: initialize
     float balance;      //TODO: initialize
     
@@ -21,6 +27,7 @@ private:
     void updateBet(bool hasWon);
     void updateCurrentBet();
     void resetBet();
+    Roulette::BetsTypes defaultBetType;
     
 
 };
