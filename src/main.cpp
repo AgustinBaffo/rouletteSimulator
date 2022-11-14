@@ -65,7 +65,7 @@ int main(int argc, char* argv[]){
         // Spin roulette.
         roulette.spin();
 
-        // Take profit
+        // Take profit.
         if(verbose){
             std::cout<<"* Players results: "<<std::endl;
         }

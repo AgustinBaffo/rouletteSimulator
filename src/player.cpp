@@ -38,14 +38,14 @@ void Player::betRoulette(const Roulette& roulette){
 }
 
 void Player::updateBets(const Roulette& roulette){
-    // Take profit
+    // Take profit.
     int moneyWon = roulette.payPlayer(playerID);
     bool hasWon = moneyWon>0;
 
-    // Update balance
+    // Update balance.
     balance += moneyWon;
 
-    // Show player info
+    // Show player info.
     if(displayLog){
         printPlayerInfo(hasWon,currentBet,balance);
     }
@@ -88,6 +88,7 @@ void Player::updateCurrentBet(){
         // Since updateCurrentBet is called after checking that betList is not empty, this case should not happen. 
         std::cout<<"[Warning] Invalid list received when trying to update current bet in player "<<name;
         resetBetList(); 
+        updateCurrentBet();
     }
 
     if(currentBet > Roulette::MAX_BET || currentBet < Roulette::MIN_BET){
