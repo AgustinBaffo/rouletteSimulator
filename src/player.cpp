@@ -49,9 +49,6 @@ void Player::updateBets(const Roulette& roulette){
 
     // Update betList and currentBet
     updateBetList(hasWon);
-
-    // Make a new bet
-    betRoulette(roulette);
 }
 
 void Player::updateBetList(bool hasWon){

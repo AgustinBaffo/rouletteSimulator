@@ -42,22 +42,22 @@ int main(int argc, char* argv[]){
         Player("F", Roulette::ODD),
     };
 
-    // Make the first bet.
-    for(auto& p: players){
-        p.betRoulette(roulette);
-    }
-    
-    // Main loop: the roulette is spun and then the players update their bets.
-    // They teke their profits based on the result of the roulette and make a new bet.
+    // Main loop: The players make their bets and then the roulette is spun.
+    // Finally the player take their profits.
     for (int spinCounter = 1; spinCounter<=SPIN_NUMBER; spinCounter++){
         
         std::cout<<"------------------------------"<<std::endl;
         std::cout<<"* Spin number: "<<spinCounter<<std::endl;
 
+        // Make the bet.
+        for(auto& p: players){
+            p.betRoulette(roulette);
+        }
+    
         // Spin roulette.
         roulette.spin();
 
-        // Take profit and make and bet again.
+        // Take profit
         std::cout<<"* Players results: "<<std::endl;
         for(auto& p: players){
             p.updateBets(roulette);
