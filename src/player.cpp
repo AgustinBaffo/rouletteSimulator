@@ -3,9 +3,10 @@
     
 int Player::playerCount = 0;
 
-Player::Player(std::string name, Roulette::BetsTypes defaultBetType):
-    name(name),
-    defaultBetType(defaultBetType)
+Player::Player(std::string name, Roulette::BetsTypes defaultBetType, bool displayLog):
+    name(name)
+    , defaultBetType(defaultBetType)
+    , displayLog(displayLog)
 {
     playerID = playerCount++;
     balance = 0;
@@ -45,7 +46,9 @@ void Player::updateBets(const Roulette& roulette){
     balance += moneyWon;
 
     // Show player info
-    printPlayerInfo(hasWon,currentBet,balance);
+    if(displayLog){
+        printPlayerInfo(hasWon,currentBet,balance);
+    }
 
     // Update betList and currentBet
     updateBetList(hasWon);
@@ -82,7 +85,7 @@ void Player::updateCurrentBet(){
     }
     
     else{
-        //Since updateCurrentBet is called after checking that betList is not empty, this case should not happen. 
+        // Since updateCurrentBet is called after checking that betList is not empty, this case should not happen. 
         std::cout<<"[Warning] Invalid list received when trying to update current bet in player "<<name;
         resetBetList(); 
     }

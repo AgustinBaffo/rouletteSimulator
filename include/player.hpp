@@ -8,7 +8,7 @@
 class Player
 {
 public:
-    Player(std::string name, Roulette::BetsTypes);
+    Player(std::string name, Roulette::BetsTypes, bool displayLog);
     ~Player();
 
     std::string getName() const;
@@ -34,6 +34,7 @@ private:
     void updateCurrentBet();
     void printPlayerInfo(bool hasWon, int moneyBet, int balance) const;
 
+    bool displayLog;
 };
 
 #endif

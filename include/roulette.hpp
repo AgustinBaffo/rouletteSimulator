@@ -32,7 +32,7 @@ public:
     static const int MAX_BET = 4000;
     static std::string getBetTypeName(BetsTypes);
 
-    Roulette();
+    Roulette(bool displayLog);
     ~Roulette();
 
     void spin();
@@ -40,6 +40,8 @@ public:
     int payPlayer(int playerID) const;
 
 private:
+
+    bool displayLog;
 
     std::map<BetsTypes,bool> betResult;
     void setBetResult(int number);

@@ -1,11 +1,12 @@
 #include <iostream>
 #include <string.h>
 #include <vector>
+#include <chrono>
 
 #include "roulette.hpp"
 #include "player.hpp"
 
-#define SPIN_NUMBER 10
+#define SPIN_NUMBER 10000
 
 void help();
 
@@ -30,24 +31,31 @@ int main(int argc, char* argv[]){
 
 
     // Instance roulette.
-    Roulette roulette;
+    Roulette roulette(verbose);
     
     // Initialize players vector.
     std::vector<Player> players = {
-        Player("A", Roulette::RED),
-        Player("B", Roulette::BLACK),
-        Player("C", Roulette::HIGH),
-        Player("D", Roulette::LOW),
-        Player("E", Roulette::EVEN),
-        Player("F", Roulette::ODD),
+        Player("A", Roulette::RED, verbose),
+        Player("B", Roulette::BLACK, verbose),
+        Player("C", Roulette::HIGH, verbose),
+        Player("D", Roulette::LOW, verbose),
+        Player("E", Roulette::EVEN, verbose),
+        Player("F", Roulette::ODD, verbose),
     };
 
-    // Main loop: The players make their bets and then the roulette is spun.
-    // Finally the player take their profits.
+    // Save start time.
+    auto start = std::chrono::high_resolution_clock::now();
+
+    // Main loop: 
+    // 1_ The players make their bets.
+    // 2_ Then the roulette is spun.
+    // 3_ Finally the player take their profits.
     for (int spinCounter = 1; spinCounter<=SPIN_NUMBER; spinCounter++){
         
-        std::cout<<"------------------------------"<<std::endl;
-        std::cout<<"* Spin number: "<<spinCounter<<std::endl;
+        if(verbose){
+            std::cout<<"------------------------------"<<std::endl;
+            std::cout<<"* Spin number: "<<spinCounter<<std::endl;
+        }
 
         // Make the bet.
         for(auto& p: players){
@@ -58,12 +66,20 @@ int main(int argc, char* argv[]){
         roulette.spin();
 
         // Take profit
-        std::cout<<"* Players results: "<<std::endl;
+        if(verbose){
+            std::cout<<"* Players results: "<<std::endl;
+        }
         for(auto& p: players){
             p.updateBets(roulette);
         }
     }
 
+    // Calculate execution duration time.
+    auto stop = std::chrono::high_resolution_clock::now();
+    auto duration = std::chrono::duration_cast<
+                            std::chrono::milliseconds>(stop - start);
+
+    // Show balance result.
     std::cout<<"\n================================"<<std::endl;
     std::cout<<"Simulation end!"<<std::endl;
     std::cout<<"* Final balance for each player: "<<std::endl;
@@ -74,7 +90,12 @@ int main(int argc, char* argv[]){
         std::cout<<"\t- Player "<<p.getName()<<": "<<playerBalance<<std::endl;
     }
 
-    std::cout<<"* Ending total balance (all the players together): "<<totalBalance<<std::endl;
+    std::cout<<"* Ending total balance (all the players together): "<<
+                        totalBalance<<std::endl;
+
+    // Show execution duration time:
+    std::cout<<std::endl<<"execution duration time: "<<
+                        duration.count()<<"ms"<<std::endl;
 
     return 0;
 }

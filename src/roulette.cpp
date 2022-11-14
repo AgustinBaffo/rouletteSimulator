@@ -2,7 +2,8 @@
 #include "player.hpp"
 
 
-Roulette::Roulette()
+Roulette::Roulette(bool displayLog):
+    displayLog(displayLog)
 {
     srand((unsigned int)time(NULL));
     resetBetResult();
@@ -24,7 +25,9 @@ void Roulette::spin(){
     updateBetTables();
 
     // Print results.
-    printSpinResult();
+    if(displayLog){
+        printSpinResult();
+    }
 }
 
 void Roulette::setBetResult(int spinResult){
