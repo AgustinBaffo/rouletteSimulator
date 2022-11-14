@@ -114,6 +114,18 @@ int main(int argc, char* argv[]){
 }
 
 void help(){
-    std::cout << "TODO: help!" << std::endl;
+    std::cout << "ROULETTE SIMULATOR" << std::endl<<std::endl;
+    std::cout << "Roulette is a casino game in which a player may choose to place a bet on a single "
+                 "number or in a different groupings of numbers. Then a wheel is spun and a random number "
+                 "in the range [0.36] is obtained. Finally, the corresponding players are paid."
+                 "You can read more about roulettes in this https://en.wikipedia.org/wiki/Roulette."<<std::endl<<std::endl;
+    std::cout << "This simulator runs a number of roulette rounds (by default 10,000) and simulates 6 "
+                 "players betting. Each player always makes the same bet, and at the end the personal and "
+                 "joint balances are calculated. See more here: "
+                 "https://github.com/abaffo/rouletteSimulator/blob/main/README.md"<<std::endl<<std::endl;
+    std::cout << "The program can be executed with the following options:" << std::endl<<std::endl;
+    std::cout << "\t-h\t\t Help." << std::endl<<std::endl;
+    std::cout << "\t-v\t\t Vervosity. Writes a log on the screen in each round." << std::endl<<std::endl;
+    std::cout << "\t-n <rounds>\t Change the number of rounds played (default 10,000)."
+                 "rounds number must by in range [1,999999]." << std::endl<<std::endl;
 }
-
