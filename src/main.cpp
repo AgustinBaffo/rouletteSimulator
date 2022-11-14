@@ -6,7 +6,8 @@
 #include "roulette.hpp"
 #include "player.hpp"
 
-#define SPIN_NUMBER 10000
+#define DEFAULT_SPIN_NUMBER 10000
+#define MAX_SPIN_NUMBER 999999
 
 void help();
 
@@ -14,6 +15,8 @@ int main(int argc, char* argv[]){
 
     // Parse args.
     bool verbose = false;
+    int spinNumber = DEFAULT_SPIN_NUMBER;
+
     for (int i = 1; i < argc; ++i){
         if(!strcmp(argv[i], "-h")){
             help();
@@ -22,6 +25,16 @@ int main(int argc, char* argv[]){
         
         if(!strcmp(argv[i], "-v")){
             verbose = true;
+        }
+
+        if(!strcmp(argv[i], "-n")){
+            spinNumber = std::atoi(argv[i+1]);
+            if(spinNumber<1 || spinNumber>MAX_SPIN_NUMBER){
+                std::cout<<"Invalid amount of round. "<<
+                           "Must be between [0,"<<MAX_SPIN_NUMBER<<"]. "<<
+                           "(Read: "<<spinNumber<<")."<<std::endl;
+                std::exit(0);
+            }
         }
     }
 
@@ -47,17 +60,17 @@ int main(int argc, char* argv[]){
     auto start = std::chrono::high_resolution_clock::now();
 
     // Main loop: 
-    // 1_ The players make their bets.
+    // 1_ The players place their bets.
     // 2_ Then the roulette is spun.
     // 3_ Finally the player take their profits.
-    for (int spinCounter = 1; spinCounter<=SPIN_NUMBER; spinCounter++){
+    for (int spinCounter = 1; spinCounter<=spinNumber; spinCounter++){
         
         if(verbose){
             std::cout<<"------------------------------"<<std::endl;
             std::cout<<"* Spin number: "<<spinCounter<<std::endl;
         }
 
-        // Make the bet.
+        // Place the bet.
         for(Player* p: players){
             p->betRoulette(roulette);
         }
