@@ -34,13 +34,13 @@ int main(int argc, char* argv[]){
     Roulette roulette(verbose);
     
     // Initialize players vector.
-    std::vector<Player> players = {
-        Player("A", Roulette::RED, verbose),
-        Player("B", Roulette::BLACK, verbose),
-        Player("C", Roulette::HIGH, verbose),
-        Player("D", Roulette::LOW, verbose),
-        Player("E", Roulette::EVEN, verbose),
-        Player("F", Roulette::ODD, verbose),
+    std::vector<Player*> players = {
+        new Player("A", Roulette::RED, verbose),
+        new Player("B", Roulette::BLACK, verbose),
+        new Player("C", Roulette::HIGH, verbose),
+        new Player("D", Roulette::LOW, verbose),
+        new Player("E", Roulette::EVEN, verbose),
+        new Player("F", Roulette::ODD, verbose),
     };
 
     // Save start time.
@@ -58,8 +58,8 @@ int main(int argc, char* argv[]){
         }
 
         // Make the bet.
-        for(auto& p: players){
-            p.betRoulette(roulette);
+        for(Player* p: players){
+            p->betRoulette(roulette);
         }
     
         // Spin roulette.
@@ -69,8 +69,8 @@ int main(int argc, char* argv[]){
         if(verbose){
             std::cout<<"* Players results: "<<std::endl;
         }
-        for(auto& p: players){
-            p.updateBets(roulette);
+        for(Player* p: players){
+            p->updateBets(roulette);
         }
     }
 
@@ -84,10 +84,10 @@ int main(int argc, char* argv[]){
     std::cout<<"Simulation end!"<<std::endl;
     std::cout<<"* Final balance for each player: "<<std::endl;
     int totalBalance = 0;
-    for(auto const &p: players){
-        int playerBalance = p.getBalance();
+    for(Player const* p: players){
+        int playerBalance = p->getBalance();
         totalBalance+=playerBalance;
-        std::cout<<"\t- Player "<<p.getName()<<": "<<playerBalance<<std::endl;
+        std::cout<<"\t- Player "<<p->getName()<<": "<<playerBalance<<std::endl;
     }
 
     std::cout<<"* Ending total balance (all the players together): "<<
