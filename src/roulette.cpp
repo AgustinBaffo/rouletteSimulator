@@ -1,6 +1,13 @@
+/**
+* @file roulette.cpp
+* @brief This file contains the definition of the roulette class.
+* @version 1.0
+* @date 11/14/2022
+* @author Agustin Baffo
+*/
+
 #include "roulette.hpp"
 #include "player.hpp"
-
 
 Roulette::Roulette(bool displayLog):
     displayLog(displayLog)
@@ -27,7 +34,7 @@ void Roulette::spin(){
     // Update bet result.
     updateBetTables();
 
-    // Print results.
+    // Print result.
     if(displayLog){
         printSpinResult();
     }

@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['roulette_2ehpp_46',['roulette.hpp',['../roulette_8hpp.html',1,'']]]
+  ['player_2ecpp_47',['player.cpp',['../player_8cpp.html',1,'']]],
+  ['player_2ehpp_48',['player.hpp',['../player_8hpp.html',1,'']]]
 ];

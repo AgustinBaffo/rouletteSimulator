@@ -155,7 +155,7 @@ private:
     std::map<BetsTypes,bool> betResult;
 
     /**
-	 * @brief Updates results table values Roulette::betResult depending on the 
+	 * @brief Updates result table values Roulette::betResult depending on the 
      * information of the current round, according to the number selected 
      * randomly in Roulette::spin().
      * @param number is the randomly selected value in Roulette::spin().

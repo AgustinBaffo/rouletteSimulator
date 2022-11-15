@@ -1,3 +1,12 @@
+/**
+* @file main.cpp
+* @brief Program entry point create to run a simulation
+* of 6 players who bet on the same roulette wheel.
+* @version 1.0
+* @date 11/14/2022
+* @author Agustin Baffo
+*/
+
 #include <iostream>
 #include <string.h>
 #include <vector>
@@ -80,7 +89,7 @@ int main(int argc, char* argv[]){
 
         // Take profit.
         if(verbose){
-            std::cout<<"* Players results: "<<std::endl;
+            std::cout<<"* Players result: "<<std::endl;
         }
         for(Player* p: players){
             p->updateBets(roulette);
