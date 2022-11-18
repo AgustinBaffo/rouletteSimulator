@@ -119,6 +119,10 @@ int main(int argc, char* argv[]){
     std::cout<<std::endl<<"execution duration time: "<<
                         duration.count()<<"ms"<<std::endl;
 
+    for(auto p: players){
+        delete p;
+    }
+
     return 0;
 }
 
